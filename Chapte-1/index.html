@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<script type="text/javascript" src="./BufferLoader.js"></script>
+<script type="text/javascript">
+	// Start off by initializing a new context.
+var contextClass = (window.AudioContext || 
+  window.webkitAudioContext || 
+  window.mozAudioContext || 
+  window.oAudioContext || 
+  window.msAudioContext);
+
+var context;
+if (contextClass) {
+  // Web Audio API is available.
+  var context = new contextClass();
+  var sounds = {};
+  var paths = {
+  	//one: 'https://raw.githubusercontent.com/LLK/scratch-audio/develop/sound-files/drums/HiHatClosed(1)_22k.wav',
+    //two: 'https://raw.githubusercontent.com/LLK/scratch-audio/develop/sound-files/drums/Claves(1)_22k.wav',
+    three: '../drums/Crash(2)_22k.wav'
+  };
+
+  loadSounds(sounds, paths);
+  var i = 0;
+  for (var name in sounds) {
+    playSound(sounds[name], i++);
+  }
+}
+// shim layer with setTimeout fallback
+window.requestAnimFrame = (function(){
+return  window.requestAnimationFrame || 
+  window.webkitRequestAnimationFrame || 
+  window.mozRequestAnimationFrame    || 
+  window.oRequestAnimationFrame      || 
+  window.msRequestAnimationFrame     || 
+  function( callback ){
+		window.setTimeout(callback, 1000 / 60);
+	};
+})();
+
+
+function playSound(buffer, time) {
+  var source = context.createBufferSource();
+  source.buffer = buffer;
+  source.connect(context.destination);
+  source.start(time);
+}
+
+function loadSounds(obj, soundMap) {
+  // Array-ify
+  var names = [];
+  var paths = [];
+  for (var name in soundMap) {
+    var path = soundMap[name];
+    names.push(name);
+    paths.push(path);
+  }
+  bufferLoader = new BufferLoader(context, paths, function(bufferList) {
+    for (var i = 0; i < bufferList.length; i++) {
+      var buffer = bufferList[i];
+      var name = names[i];
+      obj[name] = buffer;
+      playSound(buffer, i);
+    }
+  });
+  bufferLoader.load();
+}
+
+</script>
+</body>
+</html>
