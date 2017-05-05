@@ -29,6 +29,25 @@ VolumeSample.prototype.play = function() {
   this.source = context.createBufferSource();
   this.source.buffer = this.buffer;
 
+  var DURATION = 2;
+  var FREQUENCY = 1;
+  var SCALE = 0.4;
+
+  // Split the time into valueCount discrete steps.
+  var valueCount = 4096;
+  // Create a sinusoidal value curve.
+  var values = new Float32Array(valueCount);
+  for (var i = 0; i < valueCount; i++) {
+    var percent = (i / valueCount) * DURATION*FREQUENCY;
+    values[i] = 1 + (Math.sin(percent * 2*Math.PI) * SCALE);
+    // Set the last value to one, to restore playbackRate to normal at the end.
+    if (i == valueCount - 1) {
+      values[i] = 1;
+    }
+  }
+  // Apply it to the gain node immediately, and make it last for 2 seconds.
+  this.gainNode.gain.setValueCurveAtTime(values, context.currentTime, DURATION);
+
   // Connect source to a gain node
   this.source.connect(this.gainNode);
   // Connect gain node to destination
