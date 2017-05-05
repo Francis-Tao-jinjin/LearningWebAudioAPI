@@ -43,6 +43,7 @@ VolumeSample.prototype.changeVolume = function(element) {
   var fraction = parseInt(element.value) / parseInt(element.max);
   // Let's use an x*x curve (x-squared) since simple linear (x) does not
   // sound as good.
+  console.log('fraction^2 =', fraction * fraction);
   this.gainNode.gain.value = fraction * fraction;
 };
 
