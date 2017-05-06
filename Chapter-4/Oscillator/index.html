@@ -1,0 +1,41 @@
+<!doctype html>
+<head>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+  <title>Oscillator | Web Audio API</title>
+  <link rel="stylesheet" href="./style.css" type="text/css" media="screen" /></head>
+<body>
+  <div id="container">
+    <div id="nav"></div>
+    <div id="header">
+      <h1>Web Audio API</h1></div>
+    <div id="wrapper">
+      <div id="content">
+        <div class="post">
+          <h2>Oscillator</h2>
+          <p>
+            <p>Generating basic tones at various frequencies using the
+              <code>OscillatorNode</code>.</p></p>
+          <p>
+            <!-- Change between different Oscillator types. Also have a dragger thing for frequency and detune, and visualize the result. -->
+            <p>
+              <canvas style="background: white;" width="640" height="240"></canvas>
+            </p>
+            <div>Frequency:
+              <input id="frequency" type="range" min="0" max="1000" step="1" value="440" onchange="sample.changeFrequency(this.value);">Detune:
+              <input id="detune" type="range" min="-100" max="100" step="5" value="0" onchange="sample.changeDetune(this.value);"></div>
+            <div>
+              <input type="radio" name="ir" value="0" class="effect" checked onclick="sample.changeType(0)">Sine</input>
+              <input type="radio" name="ir" value="1" class="effect" onclick="sample.changeType(1)">Square</input>
+              <input type="radio" name="ir" value="2" class="effect" onclick="sample.changeType(2)">Sawtooth</input>
+              <input type="radio" name="ir" value="3" class="effect" onclick="sample.changeType(3)">Triangle</input></div>
+            <p>
+              <button onclick="sample.toggle()">Play/pause</button></p>
+            <script src="./shared.js"></script>
+            <script src="./oscillator-sample.js"></script>
+            <script>var sample = new OscillatorSample();</script></p>
+        </div>
+      </div>
+    </div>
+</body>
+
+</html>
