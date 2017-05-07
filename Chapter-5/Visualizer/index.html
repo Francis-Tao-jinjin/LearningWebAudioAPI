@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet" type="text/css" /> 
+  <title>Visualizer | Web Audio API</title> 
+  <link rel="stylesheet" href="./style.css" type="text/css" media="screen" /> 
+ </head> 
+ <body> 
+  <div id="container"> 
+   <div id="nav"> 
+   </div> 
+   <div id="header"> 
+    <h1>Web Audio API</h1> 
+   </div> 
+   <div id="wrapper"> 
+    <div id="content"> 
+     <div class="post"> 
+      <h2>Visualizer</h2> 
+      <p> </p>
+      <p>Using the AnalyserNode and some Canvas 2D visualizations to show both time- and frequency- domain.</p> 
+      <p></p> 
+      <p> </p>
+      <p><button style="display: block">Play/pause</button> 
+       <canvas></canvas></p> 
+      <script src="./shared.js"></script> 
+      <script src="./visualizer-sample.js"></script> 
+      <script>
+      var sample = new VisualizerSample();
+      document.querySelector('button').addEventListener('click', function() {
+        sample.togglePlayback()
+      });
+      </script> 
+      <p></p> 
+     </div> 
+    </div> 
+   </div>   
+  </div>
+ </body>
+</html>
