@@ -1,0 +1,31 @@
+<!doctype html>
+<head>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+  <title>Spatialized audio in 2D | Web Audio API</title>
+  <link rel="stylesheet" href="./style.css" type="text/css" media="screen" /></head>
+<body>
+  <div id="container">
+    <div id="nav"></div>
+    <div id="header">
+      <h1>Web Audio API</h1></div>
+    <div id="wrapper">
+      <div id="content">
+        <div class="post">
+          <h2>Spatialized audio in 2D</h2>
+          <p>
+            <p>Pick direction and position of the sound source relative to the listener.</p>
+          </p>
+          <p>
+            <p>Moving the mouse positions the sound source. Mousewheel or keyboard arrows change the direction of the source.</p>
+            <p>
+              <style>canvas { background: white; }</style></p>
+            <div id="panner"></div>
+            <script src="./shared.js"></script>
+            <script src="./spatialized-sample.js"></script>
+            <script>sample = new SpatializedSample(document.querySelector('#panner'));</script></p>
+        </div>
+      </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!doctype html>
+<head>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+  <title>Room Effects | Web Audio API</title>
+  <link rel="stylesheet" href="./style.css" type="text/css" media="screen" /></head>
+<body>
+  <div id="container">
+    <div id="nav"></div>
+    <div id="header">
+      <h1>Web Audio API</h1></div>
+    <div id="wrapper">
+      <div id="content">
+        <div class="post">
+          <h2>Room Effects</h2>
+          <p>
+            <p>Using
+              <code>ConvolverNode</code>and impulse response samples to illustrate various kinds of room effects.</p></p>
+          <p>
+            <p>
+              <button onclick="sample.playPause();">Play/pause</button>
+              <input type="radio" name="ir" value="0" class="effect" checked>Telephone</input>
+              <input type="radio" name="ir" value="1" class="effect">Muffler</input>
+              <input type="radio" name="ir" value="2" class="effect">Spring feedback</input>
+              <input type="radio" name="ir" value="3" class="effect">Crazy echo</input></p>
+            <script src="./shared.js"></script>
+            <script src="./room-effects-sample.js"></script>
+            <script>var sample = new RoomEffectsSample(document.querySelectorAll('input.effect'));</script></p>
+        </div>
+      </div>
+    </div>
+</body>
+
+</html>
