@@ -28,6 +28,11 @@ function onLoad() {
 }
 ```
 
+## Live Audio Input 实时音频输入
+
+One highly requested feature of the Web Audio API is integration with getUserMedia, which gives browsers access to the audio/video stream of connected microphones and cameras. At the time of this writing, this feature is available behind a flag in Chrome. To enable it, you need to visit about:flags and turn on the “Web Audio Input” experiment, as in Figure 7-1.
+
+![Figure 7-1. Enabling web audio input in Chrome](http://orm-chimera-prod.s3.amazonaws.com/1234000001552/images/waap_0701.png)
 
 
 

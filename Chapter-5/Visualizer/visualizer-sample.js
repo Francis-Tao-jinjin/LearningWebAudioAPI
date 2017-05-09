@@ -57,6 +57,7 @@ VisualizerSample.prototype.togglePlayback = function() {
     this.source.buffer = this.buffer;
     this.source.loop = true;
     // Start playback, but make sure we stay in bound of the buffer.
+    // 如果不是循环播放的话，就要判断歌曲是否已经播完，如果播完，就要从头开始播
     this.source.start(0, this.startOffset % this.buffer.duration);
     // Start visualizer.
     requestAnimFrame(this.draw.bind(this));
