@@ -34,6 +34,70 @@ One highly requested feature of the Web Audio API is integration with getUserMed
 
 ![Figure 7-1. Enabling web audio input in Chrome](http://orm-chimera-prod.s3.amazonaws.com/1234000001552/images/waap_0701.png)
 
+Once this is enabled, you can use the MediaStreamSourceNode Web Audio node. This node wraps around the audio stream object that is available once the stream is established. This is directly analogous to the way that MediaElementSourceNodes wrap <audio> elements. In the following sample, we visualize the live audio input that has been processed by a notch filter:
+启用此功能后，可以使用 MediaStreamSourceNode Web Audio 节点。 一旦流建立，该节点将包围可用的音频流对象。 这与MediaElementSourceNodes包装<audio>元素的方式直接相似。 在下面的示例中，我们可视化由陷波滤波器处理的实况音频输入：
+
+```js
+function getLiveInput() {
+  // Only get the audio stream.
+  navigator.webkitGetUserMedia({audio: true}, onStream, onStreamError);
+};
+
+function onStream(stream) {
+  // Wrap a MediaStreamSourceNode around the live input stream.
+  var input = context.createMediaStreamSource(stream);
+  // Connect the input to a filter.
+  var filter = context.createBiquadFilter();
+  filter.frequency.value = 60.0;
+  filter.type = filter.NOTCH;
+  filter.Q = 10.0;
+
+  var analyser = context.createAnalyser();
+
+  // Connect graph.
+  input.connect(filter);
+  filter.connect(analyser);
+
+  // Set up an animation.
+  requestAnimationFrame(render);
+};
+
+function onStreamError(e) {
+  console.error(e);
+};
+
+function render() {
+  // Visualize the live audio input.
+  requestAnimationFrame(render);
+};
+```
+
+Another way to establish streams is based on a WebRTC PeerConnection. By bringing a communication stream into the Web Audio API, you could, for example, spatialize multiple participants in a video conference.
+建立流的另一种方法是基于 WebRTC PeerConnection 。 通过将通信流引入 Web Audio API ，您可以将视频会议中的多个参与者进行空间化。
+
+## Page Visibility and Audio Playback 页面可见性和音频播放
+
+Whenever you develop a web application that involves audio playback, you should be cognizant of the state of the page. The classic failure mode here is that one of many tabs is playing sound, but you have no idea which one it is. This may make sense for a music player application, in which you want music to continue playing regardless of the visibility of the page. However, for a game, you often want to pause gameplay (and sound playback) when the page is no longer in the foreground.
+每当您开发涉及音频播放的Web应用程序时，您应该了解页面的状态。这里的经典故障模式是，许多选项卡中的一个播放声音，但您不知道它是哪一个。这对于音乐播放器应用程序来说可能是有意义的，您希望音乐继续播放，而不管页面的可见性如何。但是，对于游戏来说，当页面不再位于前景时，您经常要暂停游戏（和声音播放）。
+
+Luckily, the Page Visibility API provides functionality to detect when a page becomes hidden or visible. The state can be determined from the Boolean document.hidden property. The event that fires when the visibility changes is called visibilitychange. Because the API is still considered to be experimental, all of these names are webkit-prefixed. With this in mind, the following code will stop a source node when a page becomes hidden, and resume it when the page becomes visible:
+幸运的是，页面可见性API提供了检测页面何时隐藏或可见的功能。状态可以从布尔document.hidden属性确定。当可见性更改时触发的事件称为可见性更改。因为API仍被认为是实验性的，所有这些名称都有webkit前缀。考虑到这一点，当页面变为隐藏时，以下代码将停止源节点的播放，并在页面变为可见时恢复它：
+
+```js
+// Listen to the webkitvisibilitychange event.
+document.addEventListener('webkitvisibilitychange', onVisibilityChange);
+
+function onVisibilityChange() {
+  if (document.webkitHidden) {
+    source.stop(0);
+  } else {
+    source.start(0);
+  }
+}
+```
+
+
+
 
 
 
